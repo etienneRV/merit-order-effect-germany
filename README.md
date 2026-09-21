@@ -6,6 +6,17 @@ Does a higher renewable generation share reduce German day-ahead electricity pri
 displacement, and has this effect strengthened over 2019–2025? The renewable-share coefficient is estimated
 on the full sample and compared across two sub-periods, 2019–2021 and 2022–2025.
 
+## Key findings
+
+- Hours with a higher wind and solar share have clearly lower day-ahead prices. Controlling for month-level
+  swings in fuel and carbon prices (spec 4b), a 10-percentage-point higher renewable share is associated with
+  prices about 19 EUR/MWh lower.
+- The association is much stronger in 2022–2025 than in 2019–2021 (about −23 vs −11 EUR/MWh per 10 points).
+  Higher fuel and carbon costs explain part of this gap, but not all of it.
+- The choice of load control matters: controlling for residual load (load minus wind and solar) removes much
+  of the effect by construction, so total load is the more informative control.
+- These are associations, not causal estimates (see Limitations).
+
 ![Day-ahead price vs. renewable share, DE-LU 2019-2025](figures/merit_order_curve.png)
 
 *Source: ENTSO-E Transparency Platform, hourly data, 2019-2025.*
@@ -28,17 +39,6 @@ on the full sample and compared across two sub-periods, 2019–2021 and 2022–2
   time, so CET/CEST transition days contain 23 or 25 hourly observations.
 - Negative prices are kept unchanged in all estimations.
 - Hours with a missing model input are dropped, and the notebook reports how many.
-
-### Running it
-
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env          # then put your ENTSO-E API key in .env
-jupyter notebook notebook.ipynb   # Kernel -> Restart & Run All
-```
-
-An ENTSO-E API key is required. Without a valid `ENTSOE_API_KEY` in `.env`, the notebook fails immediately.
 
 ## Methodology
 
@@ -181,3 +181,14 @@ These results show association, not causation.
 
 A cleaner estimate of the structural merit-order effect would control for fuel and carbon prices directly,
 instrument the renewable share with weather data, and model the price dynamics explicitly.
+
+## Running it
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # then put your ENTSO-E API key in .env
+jupyter notebook notebook.ipynb   # Kernel -> Restart & Run All
+```
+
+An ENTSO-E API key is required. Without a valid `ENTSOE_API_KEY` in `.env`, the notebook fails immediately.
